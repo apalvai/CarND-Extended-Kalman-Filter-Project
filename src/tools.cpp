@@ -90,6 +90,11 @@ VectorXd Tools::CalculateNonLinearMeasurementVector(const VectorXd& x_state) {
         return hx;
     }
     
+    if (fabs(px) < 0.0001) {
+        cout << "CalculateNonLinearMeasurementVector () - Error - Division by Zero" << endl;
+        return hx;
+    }
+    
     // normalize bearing to be in the range of [-M_PI, M_PI]
     while (bearing > M_PI) {
         cout << "CalculateNonLinearMeasurementVector () - Error - Bearing out of range (over)" << bearing << endl;

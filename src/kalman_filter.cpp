@@ -61,6 +61,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     
     VectorXd hx = tools.CalculateNonLinearMeasurementVector(x_);
     VectorXd y = z - hx; // 2 element vector
+    while (y(1) > M_PI) {
+        y(1) -= 2 * M_PI;
+    }
+    
+    while (y(1) < -M_PI) {
+        y(1) += 2 * M_PI;
+    }
+    
     MatrixXd S = (Hj * P_ * Hjt) + R_; // 3x3 matrix
     MatrixXd K = P_ * Hjt * S.inverse(); // 3x3 matrix
     
